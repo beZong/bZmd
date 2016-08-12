@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>bZmd</RootNamespace>
     <AssemblyName>bZmd</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>發行\</PublishUrl>
     <Install>true</Install>
@@ -26,9 +26,10 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -36,6 +37,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -45,17 +47,21 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>bZmd-160112.ico</ApplicationIcon>
+    <ApplicationIcon>bZmd-160130.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommonMark, Version=0.1.0.0, Culture=neutral, PublicKeyToken=001ef8810438905d, processorArchitecture=MSIL">
-      <HintPath>..\packages\CommonMark.NET.0.11.0\lib\net40-client\CommonMark.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Strike.IE">
+      <HintPath>..\..\..\demo\Strike-master\Strike.IE\bin\Release\Strike.IE.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -64,6 +70,8 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationClient" />
+    <Reference Include="UIAutomationTypes" />
     <Reference Include="WeifenLuo.WinFormsUI.Docking">
       <HintPath>External\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
     </Reference>
@@ -75,6 +83,19 @@
     <Compile Include="DockUI\DummyDoc.designer.cs">
       <DependentUpon>DummyDoc.cs</DependentUpon>
     </Compile>
+    <Compile Include="DockUI\DummyWatchWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DockUI\DummyWatchWindow.designer.cs">
+      <DependentUpon>DummyWatchWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DockUI\DummyOutputWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DockUI\DummyOutputWindow.designer.cs">
+      <DependentUpon>DummyOutputWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DockUI\Global.cs" />
     <Compile Include="DockUI\MainForm-Event.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,13 +108,34 @@
     <Compile Include="DockUI\MarkdownWin.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="DockUI\ToolWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DockUI\ToolWindow.designer.cs">
+      <DependentUpon>ToolWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="myMarkdown\MarkdownDeep.cs" />
+    <Compile Include="myMarkdown\StrikeIE.cs" />
+    <Compile Include="myMarkdown\IMarkdown.cs" />
+    <Compile Include="myMarkdown\GithubAPI.cs" />
+    <Compile Include="myMarkdown\MarkdownSharp.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Watcher\WindowWatcher.cs" />
     <EmbeddedResource Include="DockUI\DummyDoc.resx">
       <DependentUpon>DummyDoc.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DockUI\DummyWatchWindow.resx">
+      <DependentUpon>DummyWatchWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DockUI\DummyOutputWindow.resx">
+      <DependentUpon>DummyOutputWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DockUI\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DockUI\ToolWindow.resx">
+      <DependentUpon>ToolWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -103,8 +145,9 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="packages.config" />
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -136,8 +179,14 @@
     <Folder Include="External\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bZmd-160112.ico" />
+    <EmbeddedResource Include="DockUI\github-markdown.css" />
     <EmbeddedResource Include="DockUI\markdown.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DockUI\gitlab-markdown.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bZmd-160130.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

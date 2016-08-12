@@ -5,30 +5,34 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bZmd", "bZmd\bZmd.csproj", "{6FFB6E17-09E2-4311-BDF1-908CBCA648C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkdownWin", "..\..\demo\MarkdownWin-master\src\MarkdownWin\MarkdownWin.csproj", "{F578EEC8-1C03-43B6-92A5-76C25D9A4F0F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2D1C3BFA-F50A-47B0-B92A-980D7234500C}"
+	ProjectSection(SolutionItems) = preProject
+		readme.md = readme.md
+		todo.md = todo.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{6FFB6E17-09E2-4311-BDF1-908CBCA648C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6FFB6E17-09E2-4311-BDF1-908CBCA648C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FFB6E17-09E2-4311-BDF1-908CBCA648C3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6FFB6E17-09E2-4311-BDF1-908CBCA648C3}.Debug|x64.Build.0 = Debug|Any CPU
 		{6FFB6E17-09E2-4311-BDF1-908CBCA648C3}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{6FFB6E17-09E2-4311-BDF1-908CBCA648C3}.Debug|x86.Build.0 = Debug|Any CPU
 		{6FFB6E17-09E2-4311-BDF1-908CBCA648C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FFB6E17-09E2-4311-BDF1-908CBCA648C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FFB6E17-09E2-4311-BDF1-908CBCA648C3}.Release|x64.ActiveCfg = Release|Any CPU
+		{6FFB6E17-09E2-4311-BDF1-908CBCA648C3}.Release|x64.Build.0 = Release|Any CPU
 		{6FFB6E17-09E2-4311-BDF1-908CBCA648C3}.Release|x86.ActiveCfg = Release|Any CPU
 		{6FFB6E17-09E2-4311-BDF1-908CBCA648C3}.Release|x86.Build.0 = Release|Any CPU
-		{F578EEC8-1C03-43B6-92A5-76C25D9A4F0F}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{F578EEC8-1C03-43B6-92A5-76C25D9A4F0F}.Debug|x86.ActiveCfg = Debug|x86
-		{F578EEC8-1C03-43B6-92A5-76C25D9A4F0F}.Debug|x86.Build.0 = Debug|x86
-		{F578EEC8-1C03-43B6-92A5-76C25D9A4F0F}.Release|Any CPU.ActiveCfg = Release|x86
-		{F578EEC8-1C03-43B6-92A5-76C25D9A4F0F}.Release|x86.ActiveCfg = Release|x86
-		{F578EEC8-1C03-43B6-92A5-76C25D9A4F0F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

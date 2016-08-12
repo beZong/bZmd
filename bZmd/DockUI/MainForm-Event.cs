@@ -1,17 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Reflection;
+using System.Text;
+using System.Threading;
 using System.Windows.Forms;
-
-// using logPlot.Data;
-// using logPlot.Graph;
 using WeifenLuo.WinFormsUI.Docking;
+using bZmd.Watcher;
 
 namespace bZmd.DockUI
 {
 	public partial class MainForm : Form
 	{
+
+		// private bool isRunning = false;
+		private string wActive = "";
+
 		/* public static string uPlotExt = ".uPlot";
 		public static string uPlotExtFilter = string.Format("uPlot file (*{0})|*{0}", uPlotExt);
 		List <object> dataSource = Graph.Global.dataSource; */
@@ -83,7 +87,7 @@ namespace bZmd.DockUI
 		{   // todo -- FindPlot?
 			DummyDoc DummyDoc = new DummyDoc();
 			DummyDoc.FileInfo = info;
-			// DummyDoc.Text = text;
+			DummyDoc.Text = info.Name;      // todo, rename ambiguous tabs
 			return DummyDoc;
 		}
 #if DockSample1 // eucaly, 151224
@@ -96,9 +100,9 @@ namespace bZmd.DockUI
 				return m_propertyWindow; */
 			/*else if (persistString == typeof(DummyToolbox).ToString())
 				return m_toolbox;
-			else if (persistString == typeof(DummyOutputWindow).ToString())
+			else*/ if (persistString == typeof(DummyOutputWindow).ToString())
 				return m_outputWindow;
-			else if (persistString == typeof(DummyTaskList).ToString())
+			/* else if (persistString == typeof(DummyTaskList).ToString())
 				return m_taskList;*/
 			// else
 			{
@@ -175,8 +179,8 @@ namespace bZmd.DockUI
 			#region ==== DockSample load layout ==== 
 			string configFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config");
 
-			if (File.Exists(configFile))
-				dockPanel.LoadFromXml(configFile, m_deserializeDockContent);
+			/* if (File.Exists(configFile))
+				dockPanel.LoadFromXml(configFile, m_deserializeDockContent);*/
 			#endregion
 
 			Assembly assem = Assembly.GetEntryAssembly();
@@ -217,8 +221,8 @@ namespace bZmd.DockUI
 				MessageBox.Show(String.Format("Load {0} table(s)", Log.DataSet.Tables.Count)); // from\n{1}", sFile1);
 			}
 #endif
-			if (isRunning) return;
-			isRunning = true;
+			if (Global.isRunning) return;
+			Global.isRunning = true;
 			backgroundWorker1.RunWorkerAsync();
 		}
 
@@ -228,6 +232,15 @@ namespace bZmd.DockUI
 
 		private void dockPanel_ActiveDocumentChanged(object sender, EventArgs e)
 		{
+			try
+			{
+				Global.ActiveDocumentFullName = ((DummyDoc)dockPanel.ActiveDocument).FileInfo.FullName;
+            }
+			catch (Exception ee)
+			{
+				Global.ActiveDocumentFullName = string.Empty;
+            }
+
 			/* try
 			{
 				uGraph obj = ((DummyDoc)dockPanel.ActiveDocument).PlotControl;
@@ -238,6 +251,53 @@ namespace bZmd.DockUI
 			catch (Exception ee)
 			{
 			} */
+		}
+
+		private void active_worker()
+		{
+			int chars = 256;
+			StringBuilder buff = new StringBuilder(chars);
+
+			while (true)
+			{
+				if (!Global.isRunning) break;
+
+				if (Global.toNavi != "")
+				{
+					wActive = Global.toNavi;
+					Global.toNavi = "";
+					backgroundWorker1.ReportProgress(10);
+					Thread.Sleep(500);
+					continue;
+				}
+
+				string f = WindowWatcher.FetchFileName();
+                if (f != string.Empty && f != null)
+				{
+					wActive = f;
+					backgroundWorker1.ReportProgress(10);
+				}
+
+				Thread.Sleep(500);
+			}
+		}
+
+		private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+		{
+			active_worker();
+		}
+
+		private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+		{
+			// statusBar.Visible = true;
+			// statusBar.Text = wActive;
+			if (lastHookFileName != wActive)
+			{
+				lastHookFileName = wActive;
+				var info = new FileInfo(Path.GetFullPath(wActive));
+				if (!info.Exists || info.Extension.ToLower() != ".md") return;
+				NewDummyDoc(info);
+			}
 		}
 	}
 }

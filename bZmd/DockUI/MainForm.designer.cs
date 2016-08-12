@@ -74,6 +74,7 @@ namespace bZmd.DockUI
 			this.menuItem5 = new System.Windows.Forms.ToolStripSeparator();
 			this.showRightToLeft = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusBar = new System.Windows.Forms.StatusStrip();
+			this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.toolBar = new System.Windows.Forms.ToolStrip();
 			this.toolBarButtonNew = new System.Windows.Forms.ToolStripButton();
@@ -92,7 +93,6 @@ namespace bZmd.DockUI
 			this.topBar = new System.Windows.Forms.Panel();
 			this.bottomBar = new System.Windows.Forms.Panel();
 			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-			this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
 			this.mainMenu.SuspendLayout();
 			this.statusBar.SuspendLayout();
 			this.toolBar.SuspendLayout();
@@ -452,6 +452,11 @@ namespace bZmd.DockUI
 			this.statusBar.Size = new System.Drawing.Size(579, 22);
 			this.statusBar.TabIndex = 4;
 			// 
+			// toolStripProgressBar1
+			// 
+			this.toolStripProgressBar1.Name = "toolStripProgressBar1";
+			this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
+			// 
 			// imageList
 			// 
 			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
@@ -606,11 +611,6 @@ namespace bZmd.DockUI
 			this.backgroundWorker1.WorkerReportsProgress = true;
 			this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
 			this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
-			// 
-			// toolStripProgressBar1
-			// 
-			this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-			this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
 			// 
 			// MainForm
 			// 

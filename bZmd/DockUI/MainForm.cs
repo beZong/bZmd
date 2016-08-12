@@ -1,17 +1,9 @@
 using System;
 using System.Drawing;
-using System.Collections;
-using System.ComponentModel;
 using System.Reflection;
 using System.Windows.Forms;
 using System.IO;
-// using DockSample.Customization;
-// using Lextm.SharpSnmpLib;
 using WeifenLuo.WinFormsUI.Docking;
-using System.Text;
-using System.Runtime.InteropServices;
-using System.Threading;
-using System.Text.RegularExpressions;
 
 // using DockSample;		// eucaly, 151205 
 
@@ -25,7 +17,9 @@ namespace bZmd.DockUI		// eucaly, 151205
 		private DummySolutionExplorer m_solutionExplorer;
 		private DummyPropertyWindow m_propertyWindow;
 		private DummyToolbox m_toolbox;
+#endif
 		private DummyOutputWindow m_outputWindow;
+#if x160113
 		private DummyTaskList m_taskList;
 		private bool _showSplash;
 		private SplashScreen _splashScreen;
@@ -58,19 +52,6 @@ namespace bZmd.DockUI		// eucaly, 151205
 
 			SetSchema(this.menuItemSchemaVS2013Blue, null);
 		}
-
-		private bool isRunning = false;
-		private string wActive = "";
-
-		// https://social.msdn.microsoft.com/Forums/en-US/2ee1e7ae-946f-4394-b09d-7d1021d8be23/how-to-get-the-active-windows-title?forum=csharpgeneral
-		[DllImport("user32.dll")]
-		private static extern IntPtr GetForegroundWindow();
-
-		[DllImport("user32.dll")]
-		private static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
-
-		// getwindowthreadprocessid - http://www.pinvoke.net/default.aspx/user32.getwindowthreadprocessid
-		// https://pinvoke.codeplex.com/
 
 		#region Methods
 
@@ -173,9 +154,9 @@ namespace bZmd.DockUI		// eucaly, 151205
 			// we don't want to create another instance of tool window, set DockPanel to null
 			/* m_solutionExplorer.DockPanel = null;
 			m_propertyWindow.DockPanel = null;
-			m_toolbox.DockPanel = null;
+			m_toolbox.DockPanel = null; */
 			m_outputWindow.DockPanel = null;
-			m_taskList.DockPanel = null; */
+			/* m_taskList.DockPanel = null; */
 
 			// Close all other document windows
 			CloseAllDocuments();
@@ -300,7 +281,7 @@ namespace bZmd.DockUI		// eucaly, 151205
 
 		private void menuItemOutputWindow_Click(object sender, System.EventArgs e)
 		{
-			// m_outputWindow.Show(dockPanel);
+			m_outputWindow.Show(dockPanel);
 		}
 
 		private void menuItemTaskList_Click(object sender, System.EventArgs e)
@@ -406,61 +387,16 @@ namespace bZmd.DockUI		// eucaly, 151205
 			if (File.Exists(configFile))
 				dockPanel.LoadFromXml(configFile, m_deserializeDockContent); */
 
-			if (isRunning) return;
+			/* if (isRunning) return;
 			isRunning = true;
-			backgroundWorker1.RunWorkerAsync();
-		}
-
-		private void active_worker()
-		{
-			int chars = 256;
-			StringBuilder buff = new StringBuilder(chars);
-
-			while (true)
-			{
-				if (!isRunning) break;
-				// Obtain the handle of the active window.
-				IntPtr handle = GetForegroundWindow();
-
-				if (GetWindowText(handle, buff, chars) > 0)
-				{
-					// MessageBox.Show(buff.ToString());
-					wActive = buff.ToString();
-					backgroundWorker1.ReportProgress(10);
-					//MessageBox.Show(handle.ToString());
-				}
-				Thread.Sleep(1000);
-			}
-		}
-
-		private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-		{
-			active_worker();
-		}
-
-		private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
-		{
-			// statusBar.Visible = true;
-			// statusBar.Text = wActive;
-			if (lastHookFileName != wActive)
-			{
-				lastHookFileName = wActive;
-				Match m = Regex.Match(lastHookFileName, @"(.+) - Notepad\+\+");
-				if (m.Success)
-				{
-					int num = 0;
-					var info = new FileInfo(m.Groups[1].Value);
-					if (!info.Exists || info.Extension.ToLower() != ".md") return;
-					NewDummyDoc(info);
-				}
-			}
-			
+			backgroundWorker1.RunWorkerAsync(); */
 		}
 
 		private void MainForm_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			isRunning = false;
-            string configFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config");
+			// isRunning = false;
+			Global.isRunning = false;
+			string configFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config");
 			if (m_bSaveLayout)
 				dockPanel.SaveAsXml(configFile);
 			else if (File.Exists(configFile))
@@ -534,9 +470,9 @@ namespace bZmd.DockUI		// eucaly, 151205
 		{ /*
 			m_solutionExplorer = new DummySolutionExplorer();
 			m_propertyWindow = new DummyPropertyWindow();
-			m_toolbox = new DummyToolbox();
+			m_toolbox = new DummyToolbox(); */
 			m_outputWindow = new DummyOutputWindow();
-			m_taskList = new DummyTaskList(); */
+			/* m_taskList = new DummyTaskList(); */
 		}
 
 		private void menuItemLayoutByXml_Click(object sender, System.EventArgs e)

@@ -1,5 +1,7 @@
 # ToDo
-* rename ambiguous tabs
+
+* detect encoding, warning if not UTF-8
+* navigate to folder => redirect to readme.md or folderName.md
 * Log panel
 * Setting panel
 

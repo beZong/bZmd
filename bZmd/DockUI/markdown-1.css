@@ -1,0 +1,149 @@
+﻿body
+{
+    margin: 0 auto;
+    /* font-family: Georgia, Palatino, serif; */
+    font-family: "Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    /* font: 13px/1.4 Helvetica,arial,nimbussansl,liberationsans,freesans,clean,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"; */
+    /* font-family: arial,Helvetica,nimbussansl,liberationsans,freesans,clean,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"; */
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+    /* line-height: 1; */
+    max-width: 960px;
+    padding: 30px;
+}
+p
+{
+    margin-top: 0px;
+    margin-bottom: 16px;
+}
+h1, h2, h3, h4
+{
+    /* color: #111111; */
+    font-weight: 400;
+}
+h1, h2, h3, h4, h5, p
+{
+    margin-bottom: 24px;
+    padding: 0;
+}
+h1
+{
+	padding-bottom: 0.3em;
+	font-size: 2.25em;
+	line-height: 1.2;
+	border-bottom: 1px solid #EEE;
+}
+h2
+{
+	padding-bottom: 0.3em;
+	font-size: 1.75em;
+	line-height: 1.225;
+	border-bottom: 1px solid #EEE;
+}
+h3
+{
+	margin-top: 1em;
+	margin-bottom: 16px;
+	font-weight: bold;
+	line-height: 1.4;
+}
+h4
+{
+    font-size: 21px;
+}
+h5
+{
+    font-size: 18px;
+}
+a
+{
+    color: #0099ff;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+a:hover
+{
+    text-decoration: none;
+    color: #ff6600;
+}
+a:visited
+{
+    color: purple;
+}
+ul, ol
+{
+    padding: 0;
+    /* padding-left: 2em; */
+    margin-top: 0px;
+    margin-bottom: 16px;
+}
+/* li
+{
+    line-height: 24px;
+}
+li ul, li ul
+{
+    margin-left: 24px;
+}
+p, ul, ol
+{
+    font-size: 16px;
+    line-height: 24px;
+    max-width: 540px;
+} */
+pre
+{
+    font-family: Consolas, Monaco, Andale Mono, monospace;
+    padding: 0px 24px;
+    max-width: 800px;
+    white-space: pre-wrap;
+    line-height: 1;
+}
+code
+{
+    font-family: Consolas, Monaco, Andale Mono, monospace;
+	padding: 0.2em 0px;
+	margin: 0px;
+	font-size: 85%;
+	background-color: rgba(0, 0, 0, 0.04);
+	border-radius: 3px;
+	color: #333;
+}
+aside
+{
+    display: block;
+    float: right;
+    width: 390px;
+}
+blockquote
+{
+    border-left: .5em solid #eee;
+    padding: 0 2em;
+    margin-left: 0;
+    max-width: 476px;
+}
+blockquote cite
+{
+    font-size: 14px;
+    line-height: 20px;
+    color: #bfbfbf;
+}
+blockquote cite:before
+{
+    content: '\2014 \00A0';
+}
+
+blockquote p
+{
+    color: #666;
+    max-width: 460px;
+}
+hr
+{
+    width: 540px;
+    text-align: left;
+    margin: 0 auto 0 0;
+    color: #999;
+}

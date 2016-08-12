@@ -39,8 +39,13 @@ namespace bZmd.DockUI
 			this.menuItem5 = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
 			this.browser = new System.Windows.Forms.WebBrowser();
+			this.bgRefreshWorker = new System.ComponentModel.BackgroundWorker();
+			this.statusBar = new System.Windows.Forms.StatusStrip();
+			this.statusMessage = new System.Windows.Forms.ToolStripStatusLabel();
+			this.addressBar = new System.Windows.Forms.TextBox();
 			this.mainMenu.SuspendLayout();
 			this.contextMenuTabPage.SuspendLayout();
+			this.statusBar.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// mainMenu
@@ -108,16 +113,52 @@ namespace bZmd.DockUI
 			// browser
 			// 
 			this.browser.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.browser.Location = new System.Drawing.Point(0, 4);
+			this.browser.Location = new System.Drawing.Point(0, 29);
 			this.browser.MinimumSize = new System.Drawing.Size(20, 18);
 			this.browser.Name = "browser";
-			this.browser.Size = new System.Drawing.Size(448, 389);
+			this.browser.Size = new System.Drawing.Size(448, 342);
 			this.browser.TabIndex = 4;
+			this.browser.Navigating += new System.Windows.Forms.WebBrowserNavigatingEventHandler(this.browser_Navigating);
+			// 
+			// bgRefreshWorker
+			// 
+			this.bgRefreshWorker.WorkerReportsProgress = true;
+			this.bgRefreshWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgRefreshWorker_DoWork);
+			// 
+			// statusBar
+			// 
+			this.statusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusMessage});
+			this.statusBar.Location = new System.Drawing.Point(0, 371);
+			this.statusBar.Name = "statusBar";
+			this.statusBar.Size = new System.Drawing.Size(448, 22);
+			this.statusBar.TabIndex = 5;
+			this.statusBar.Text = "statusStrip1";
+			// 
+			// statusMessage
+			// 
+			this.statusMessage.Font = new System.Drawing.Font("Microsoft JhengHei UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+			this.statusMessage.Name = "statusMessage";
+			this.statusMessage.Size = new System.Drawing.Size(69, 17);
+			this.statusMessage.Text = "Loading ...";
+			// 
+			// addressBar
+			// 
+			this.addressBar.Dock = System.Windows.Forms.DockStyle.Top;
+			this.addressBar.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.addressBar.ForeColor = System.Drawing.SystemColors.WindowText;
+			this.addressBar.Location = new System.Drawing.Point(0, 4);
+			this.addressBar.Name = "addressBar";
+			this.addressBar.Size = new System.Drawing.Size(448, 25);
+			this.addressBar.TabIndex = 6;
+			this.addressBar.TabStop = false;
 			// 
 			// DummyDoc
 			// 
 			this.ClientSize = new System.Drawing.Size(448, 393);
 			this.Controls.Add(this.browser);
+			this.Controls.Add(this.addressBar);
+			this.Controls.Add(this.statusBar);
 			this.Controls.Add(this.mainMenu);
 			this.Font = new System.Drawing.Font("·s²Ó©úÅé", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -125,9 +166,12 @@ namespace bZmd.DockUI
 			this.Name = "DummyDoc";
 			this.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
 			this.TabPageContextMenuStrip = this.contextMenuTabPage;
+			this.Activated += new System.EventHandler(this.DummyDoc_Activated);
 			this.mainMenu.ResumeLayout(false);
 			this.mainMenu.PerformLayout();
 			this.contextMenuTabPage.ResumeLayout(false);
+			this.statusBar.ResumeLayout(false);
+			this.statusBar.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -144,5 +188,9 @@ namespace bZmd.DockUI
 		private System.Windows.Forms.ToolStripMenuItem menuItemCheckTest;
 		private System.Windows.Forms.ToolTip toolTip;
 		private System.Windows.Forms.WebBrowser browser;
+		private System.ComponentModel.BackgroundWorker bgRefreshWorker;
+		private System.Windows.Forms.StatusStrip statusBar;
+		private System.Windows.Forms.ToolStripStatusLabel statusMessage;
+		private System.Windows.Forms.TextBox addressBar;
 	}
 }
