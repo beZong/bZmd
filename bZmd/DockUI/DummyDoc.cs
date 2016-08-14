@@ -15,18 +15,18 @@ namespace bZmd.DockUI
 			Global.myDebug("after InitializeComponent()");
 
 			#region MarkdownWin
-
-			browser.DocumentCompleted += BrowserDocumentCompleted;
-			browser.PreviewKeyDown += BrowserPreviewKeyDown;
+			// MarkdownWin *21
+			browser.DocumentCompleted += browser_DocumentCompleted;
+			// browser.PreviewKeyDown += browser_PreviewKeyDown;
 			browser.AllowWebBrowserDrop = false;
-			browser.IsWebBrowserContextMenuEnabled = false;
-			browser.WebBrowserShortcutsEnabled = false;
+			// browser.IsWebBrowserContextMenuEnabled = false;		// ContextMenu Enabled
+			//browser.WebBrowserShortcutsEnabled = false;			// Shortcuts Enabled
 			//browser.AllowNavigation = false;
 			browser.ScriptErrorsSuppressed = true;
 
-			browser.StatusTextChanged += Browser_StatusTextChange; // new DWebBrowserEvents2_StatusTextChangeEventHandler(AxWebBrowser_StatusTextChange)
+			browser.StatusTextChanged += browser_StatusTextChange; // new DWebBrowserEvents2_StatusTextChangeEventHandler(AxWebBrowser_StatusTextChange)
 
-			_fileWatcher = new FileSystemWatcher();
+			_fileWatcher = new FileSystemWatcher();		// need assign in Class constructor
 			_fileWatcher.NotifyFilter = NotifyFilters.Size |  NotifyFilters.LastWrite;
 			_fileWatcher.Changed += new FileSystemEventHandler(OnWatchedFileChanged);
 			bgRefreshWorker.RunWorkerAsync();
@@ -34,11 +34,13 @@ namespace bZmd.DockUI
 			this.Disposed += new EventHandler(Watcher_Disposed);
 			browser.AllowWebBrowserDrop = false;
 
-#endregion
+			#endregion
 		}
 
 		private FileInfo m_fileInfo = null;
 		private string m_Url = string.Empty;
+		private string _html = string.Empty;
+		private string _html_with_css = string.Empty;
 
 		// private string m_fileName = string.Empty;
 		public string FileName
@@ -49,17 +51,6 @@ namespace bZmd.DockUI
                 if (value != string.Empty)
                 {
 					m_fileInfo = new FileInfo(value);
-					/*   Stream s = new FileStream(value, FileMode.Open);
-
-					   FileInfo efInfo = new FileInfo(value);
-
-					   string fext = efInfo.Extension.ToUpper();
-
-					   if (fext.Equals(".RTF"))
-						   richTextBox1.LoadFile(s, RichTextBoxStreamType.RichText);
-					   else
-						   richTextBox1.LoadFile(s, RichTextBoxStreamType.PlainText);
-					   s.Close();*/
 				}
 
 				this.ToolTipText = value;	// todo
@@ -94,22 +85,7 @@ namespace bZmd.DockUI
 				this.ToolTipText = (m_fileInfo == null) ? "" : m_fileInfo.FullName; 
 			}
 		}
-		/*
-		// workaround of RichTextbox control's bug:
-		// If load file before the control showed, all the text format will be lost
-		// re-load the file after it get showed.
-		private bool m_resetText = true;
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            base.OnPaint(e);
 
-            if (m_resetText)
-            {
-                m_resetText = false;
-                FileName = FileName;
-            }
-        }
-		*/
         protected override string GetPersistString()
         {
             // Add extra information into the persist string for this document
@@ -139,48 +115,43 @@ namespace bZmd.DockUI
 			// PendingPreview(m_fileInfo);
 		}
 
-		private void browser_Navigating(object sender, WebBrowserNavigatingEventArgs e)
+		private void menuItemExportHTML_Click(object sender, EventArgs e)
 		{
-			string url = e.Url.ToString();
-			Global.myDebug(_stat + " url = " + url);
+			Global.myDebug("ExportHTML");
 
-            if (url == "about:blank")
-			{
-				/* m_Url = "file:///" + m_fileInfo.FullName.Replace('\\', '/'); // + "/";
-				e.Cancel = true;
-				browser.Navigate(m_Url); */
-				return;
-			}
+			SaveFileDialog SaveDlg = new SaveFileDialog();
+			SaveDlg.Title = "Export HTML";
+			SaveDlg.Filter = "html file (*.html;*.htm)|*.html;*.htm";
+			SaveDlg.DefaultExt = "htm";
+			SaveDlg.InitialDirectory = m_fileInfo.DirectoryName;
+			// SaveDlg.FileName = Path.Combine(m_fileInfo.DirectoryName, Path.GetFileNameWithoutExtension(m_fileInfo.Name) + DateTime.Now.ToString("-yyMMdd-HHmmss") + ".htm");
+			SaveDlg.FileName = Path.GetFileNameWithoutExtension(m_fileInfo.Name) + DateTime.Now.ToString("-yyMMdd-HHmmss") + ".htm";
 
-			if (url == m_Url || url.IndexOf("navcancl.htm", StringComparison.InvariantCultureIgnoreCase) >=0 ) // url.EndsWith
-				return;
+			if (SaveDlg.ShowDialog() == DialogResult.OK)
+				File.WriteAllText(SaveDlg.FileName, _html);
+				// MainTextBox.SaveFile(SaveDlg.FileName, RichTextBoxStreamType.PlainText);
 
-			if (url.StartsWith("http://") || url.StartsWith("https://"))
-			{
-				// Web link in default browser
-				System.Diagnostics.Process.Start(url);
-
-				/* using (Process exeProcess = Process.Start(url))
-				{
-					exeProcess.WaitForExit();
-				} */
-
-				e.Cancel = true;
-				return;
-			}
-
-			if (url.StartsWith("about:") || url.StartsWith("file:"))
-            {
-				// File link in another tab
-				string target = Path.Combine(m_fileInfo.DirectoryName, url.Replace("about:", ""));
-				Global.toNavi = target;
-				e.Cancel = true;
-			}
 		}
 
-		private void Browser_StatusTextChange(object sender, EventArgs e)
+		private void menuItemExportHTMLwithCSS_Click(object sender, EventArgs e)
 		{
-			statusMessage.Text = ((WebBrowser)sender).StatusText.Replace("about:", "");
+			Global.myDebug("ExportHTML with CSS");
+
+			SaveFileDialog SaveDlg = new SaveFileDialog();
+			SaveDlg.Title = "Export HTML with CSS";
+			SaveDlg.Filter = "html file (*.html;*.htm)|*.html;*.htm";
+			SaveDlg.DefaultExt = "htm";
+			SaveDlg.InitialDirectory = m_fileInfo.DirectoryName;
+			// SaveDlg.FileName = Path.Combine(m_fileInfo.DirectoryName, Path.GetFileNameWithoutExtension(m_fileInfo.Name) + DateTime.Now.ToString("-yyMMdd-HHmmss") + ".htm");
+			SaveDlg.FileName = Path.GetFileNameWithoutExtension(m_fileInfo.Name) + DateTime.Now.ToString("-yyMMdd-HHmmss") + ".htm";
+
+			if (SaveDlg.ShowDialog() == DialogResult.OK)
+				File.WriteAllText(SaveDlg.FileName, _html_with_css);
+		}
+
+		private void menuItem_Close_Click(object sender, EventArgs e)
+		{
+			this.Close();
 		}
 	}
 }

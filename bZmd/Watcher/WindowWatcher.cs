@@ -109,6 +109,8 @@ namespace bZmd.Watcher
 					thisFileName = string.Empty;
 
 					// Notepad++
+					// Window Class = "Notepad++"
+					// Window Title contains filename, start with (optional) "*", and end with "Notepad++"
 					if (aWin.Current.ClassName.ToLower() == "Notepad++".ToLower())
 					{
 						Match m = Regex.Match(aWin.Current.Name, @"([^*]+\.md) - Notepad\+\+");
@@ -118,8 +120,23 @@ namespace bZmd.Watcher
 						}
 						continue;
 					}
-					
+
+					// PSPad
+					// Window Class = "TfPSPad.UnicodeClass", or contains "TfPSPad"
+					// Window Title start with "PSPad -", contains [filename *]
+					if (aWin.Current.ClassName.ToLower().Contains( "TfPSPad".ToLower() ))
+					{
+						Match m = Regex.Match(aWin.Current.Name, @"PSPad[^[]+\[(.+\.md)( \*)*\]");	// todo, more robust
+						if (m.Success)
+						{
+							thisFileName = m.Groups[1].Value.Replace(" *", "");     // todo, more robust
+						}
+						continue;
+					}
+
 					// VisualStudio
+					// AutomationId = "VisualStudioMainWindow"
+					// Active Control has higher node that AutomationId contains |filename|
 					if (aWin.Current.AutomationId.ToLower() == "VisualStudioMainWindow".ToLower())
 					{
 						var aUp = Up(aCtrl, x => Regex.Match(x.Current.AutomationId, @"\|([^*|]+\.md)\|").Success );
@@ -135,6 +152,10 @@ namespace bZmd.Watcher
 					}
 
 					// File Explorer
+					// Window Class = "CabinetWClass"
+					// Active Control Class = "UIItem", and ControlType.ListItem
+					// => SelectionItemPattern => Name => File Name
+					// => Toolbar ( .ReBarWindow32 .[Breadcrumb Parent] .ToolbarWindow32 ) => Name => Path
 					if (aWin.Current.ClassName.Equals( "CabinetWClass", StringComparison.InvariantCultureIgnoreCase))		// win10, QTTabBar
 					{
 						if (aCtrl.Current.ClassName.Equals("UIItem", StringComparison.InvariantCultureIgnoreCase)

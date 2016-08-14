@@ -34,9 +34,11 @@ namespace bZmd.DockUI
 			this.menuItem2 = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuItemCheckTest = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuTabPage = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.menuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-			this.menuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuItemExportHTML = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuItemExportHTMLwithCSS = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuItem5 = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.menuItem_Close = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
 			this.browser = new System.Windows.Forms.WebBrowser();
 			this.bgRefreshWorker = new System.ComponentModel.BackgroundWorker();
@@ -86,29 +88,46 @@ namespace bZmd.DockUI
 			// contextMenuTabPage
 			// 
 			this.contextMenuTabPage.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItem3,
-            this.menuItem4,
-            this.menuItem5});
+            this.menuItemExportHTML,
+            this.menuItemExportHTMLwithCSS,
+            this.menuItem5,
+            this.toolStripSeparator1,
+            this.menuItem_Close});
 			this.contextMenuTabPage.Name = "contextMenuTabPage";
-			this.contextMenuTabPage.Size = new System.Drawing.Size(125, 70);
+			this.contextMenuTabPage.Size = new System.Drawing.Size(200, 120);
 			// 
-			// menuItem3
+			// menuItemExportHTML
 			// 
-			this.menuItem3.Name = "menuItem3";
-			this.menuItem3.Size = new System.Drawing.Size(124, 22);
-			this.menuItem3.Text = "Option &1";
+			this.menuItemExportHTML.Name = "menuItemExportHTML";
+			this.menuItemExportHTML.Size = new System.Drawing.Size(199, 22);
+			this.menuItemExportHTML.Text = "Export HTML";
+			this.menuItemExportHTML.Click += new System.EventHandler(this.menuItemExportHTML_Click);
 			// 
-			// menuItem4
+			// menuItemExportHTMLwithCSS
 			// 
-			this.menuItem4.Name = "menuItem4";
-			this.menuItem4.Size = new System.Drawing.Size(124, 22);
-			this.menuItem4.Text = "Option &2";
+			this.menuItemExportHTMLwithCSS.Name = "menuItemExportHTMLwithCSS";
+			this.menuItemExportHTMLwithCSS.Size = new System.Drawing.Size(199, 22);
+			this.menuItemExportHTMLwithCSS.Text = "Export HTML with CSS";
+			this.menuItemExportHTMLwithCSS.Click += new System.EventHandler(this.menuItemExportHTMLwithCSS_Click);
 			// 
 			// menuItem5
 			// 
 			this.menuItem5.Name = "menuItem5";
-			this.menuItem5.Size = new System.Drawing.Size(124, 22);
+			this.menuItem5.Size = new System.Drawing.Size(199, 22);
 			this.menuItem5.Text = "Option &3";
+			this.menuItem5.Visible = false;
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(196, 6);
+			// 
+			// menuItem_Close
+			// 
+			this.menuItem_Close.Name = "menuItem_Close";
+			this.menuItem_Close.Size = new System.Drawing.Size(199, 22);
+			this.menuItem_Close.Text = "Close";
+			this.menuItem_Close.Click += new System.EventHandler(this.menuItem_Close_Click);
 			// 
 			// browser
 			// 
@@ -182,8 +201,8 @@ namespace bZmd.DockUI
 		private System.Windows.Forms.ToolStripMenuItem menuItem1;
 		private System.Windows.Forms.ToolStripMenuItem menuItem2;
 		private System.Windows.Forms.ContextMenuStrip contextMenuTabPage;
-		private System.Windows.Forms.ToolStripMenuItem menuItem3;
-		private System.Windows.Forms.ToolStripMenuItem menuItem4;
+		private System.Windows.Forms.ToolStripMenuItem menuItemExportHTML;
+		private System.Windows.Forms.ToolStripMenuItem menuItemExportHTMLwithCSS;
 		private System.Windows.Forms.ToolStripMenuItem menuItem5;
 		private System.Windows.Forms.ToolStripMenuItem menuItemCheckTest;
 		private System.Windows.Forms.ToolTip toolTip;
@@ -192,5 +211,7 @@ namespace bZmd.DockUI
 		private System.Windows.Forms.StatusStrip statusBar;
 		private System.Windows.Forms.ToolStripStatusLabel statusMessage;
 		private System.Windows.Forms.TextBox addressBar;
+		private System.Windows.Forms.ToolStripMenuItem menuItem_Close;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 	}
 }

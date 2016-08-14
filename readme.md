@@ -27,10 +27,10 @@ Also, a viewer will be ealier to implement, and to add features, such as,
 	* GitLab style CSS
 * Flexible Markdown converter
 	* [Pandoc](http://pandoc.org) -- universal document converter
-	* Allow user to select differnt render backend
+	* Allow user to select different render backend
 * Fetch active markdown files from other editors, including:
 	* **(80%)** Notepad++
-	* PSPad ...
+	* **(80%)** PSPad ...
 	* (50%) Visual Studio -- not hooked file saving ??
 	* (?) SharpDevelop
 	* ... allow user to add other programs
@@ -53,14 +53,17 @@ Also, a viewer will be ealier to implement, and to add features, such as,
 	* **(80%)** Show link URL in status bar
 	* Handle broken link while navigating
 	* Fix broken link in markdown file
-* Copy
-	* selected html
-	* selected markdown
+* Browser context menu and shortcut
+	* Copy
+		* **(80%)** selected html (Ctrl-C)
+		* selected markdown
+	* **(80%)** Zoom in, Zoom out (Ctrl-scroll-up/down)
+	* restore default zoom
 * Export HTML
-	* @ to clipboard
-	* @ save as file
-	* @ with style CSS
-	* @ without styles
+	* (60%) to clipboard - by Ctrl-C
+	* **(70%)** save as file
+	* **(70%)** with style CSS
+	* **(70%)** without styles
 * Full text search acorss files
 * Window location
 	* Side By side, auto docking
