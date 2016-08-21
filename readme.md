@@ -2,6 +2,8 @@
 
 Preview markdown files, when editing with (virtually) any editors.
 
+![demo](https://github.com/beZong/bZmd/blob/master/doc/bZmd-demo-160820.gif)
+
 ## Motivation
 
 Inspired by [**Grip**](https://github.com/joeyespo/grip) (GitHub Readme Instant Preview)
